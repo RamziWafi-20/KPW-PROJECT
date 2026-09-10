@@ -1,0 +1,36 @@
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import React, { useState } from 'react';
+import { Layers, Shield, KeyRound, User, ArrowRight, Building2, CheckCircle2 } from 'lucide-react';
+import { DEMO_USERS } from '../../data/seedData.js';
+import { storeService } from '../../services/storeService.js';
+export const LoginView = ({ onLoginSuccess }) => {
+    const [username, setUsername] = useState('ramziwafi');
+    const [password, setPassword] = useState('password123');
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const handleLogin = (e) => {
+        e.preventDefault();
+        setError(null);
+        setIsLoading(true);
+        setTimeout(() => {
+            const res = storeService.login(username, password);
+            setIsLoading(false);
+            if (res.success && res.user) {
+                onLoginSuccess(res.user);
+            }
+            else {
+                setError(res.message);
+            }
+        }, 250);
+    };
+    const handleSelectQuickAccount = (demoUser) => {
+        setUsername(demoUser.username);
+        setPassword('password123');
+        setError(null);
+        const res = storeService.login(demoUser.username, 'password123');
+        if (res.success && res.user) {
+            onLoginSuccess(res.user);
+        }
+    };
+    return (_jsxs("div", { className: "min-h-screen bg-[#03045E] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden", children: [_jsx("div", { className: "absolute top-0 -left-40 w-96 h-96 bg-[#0077B6] rounded-full blur-3xl opacity-30 pointer-events-none" }), _jsx("div", { className: "absolute bottom-0 -right-40 w-96 h-96 bg-[#00B4D8] rounded-full blur-3xl opacity-20 pointer-events-none" }), _jsxs("div", { className: "sm:mx-auto sm:w-full sm:max-w-md z-10 px-4", children: [_jsxs("div", { className: "text-center mb-8", children: [_jsx("div", { className: "inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#0077B6] shadow-xl text-white mb-3 shadow-[#0077B6]/30", children: _jsx(Layers, { className: "w-8 h-8" }) }), _jsx("h1", { className: "text-3xl font-black text-white tracking-tight brand-font", children: "STORA" }), _jsx("p", { className: "text-xs font-semibold uppercase tracking-widest text-[#90E0EF] mt-1", children: "Store & Receiving Management System" }), _jsx("p", { className: "text-xs text-[#ADE8F4]/70 mt-1", children: "Laravel 13 \u2022 AdminLTE \u2022 Reverb WebSocket Realtime" })] }), _jsxs("div", { className: "bg-white dark:bg-[#023E8A] py-8 px-6 sm:px-8 shadow-2xl rounded-3xl border border-slate-200 dark:border-[#0077B6]/50", children: [_jsxs("form", { onSubmit: handleLogin, className: "space-y-4", children: [error && (_jsxs("div", { className: "p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs font-medium flex items-center gap-2", children: [_jsx("span", { children: "\u2715" }), _jsx("span", { children: error })] })), _jsxs("div", { children: [_jsx("label", { className: "block text-[11px] font-semibold uppercase tracking-wider text-slate-600 dark:text-[#ADE8F4] mb-1.5", children: "Username" }), _jsxs("div", { className: "relative", children: [_jsx("div", { className: "absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-[#90E0EF]", children: _jsx(User, { className: "w-4 h-4" }) }), _jsx("input", { type: "text", required: true, value: username, onChange: (e) => setUsername(e.target.value), placeholder: "Enter your username", className: "w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50 dark:bg-[#03045E]/80 border border-slate-200 dark:border-[#0077B6]/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00B4D8]/30 focus:border-[#00B4D8] transition" })] })] }), _jsxs("div", { children: [_jsx("label", { className: "block text-[11px] font-semibold uppercase tracking-wider text-slate-600 dark:text-[#ADE8F4] mb-1.5", children: "Password" }), _jsxs("div", { className: "relative", children: [_jsx("div", { className: "absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-[#90E0EF]", children: _jsx(KeyRound, { className: "w-4 h-4" }) }), _jsx("input", { type: "password", required: true, value: password, onChange: (e) => setPassword(e.target.value), placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022", className: "w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50 dark:bg-[#03045E]/80 border border-slate-200 dark:border-[#0077B6]/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00B4D8]/30 focus:border-[#00B4D8] transition" })] })] }), _jsx("button", { type: "submit", disabled: isLoading, className: "w-full py-3 px-4 rounded-xl bg-[#0077B6] hover:bg-[#0096C7] text-white font-semibold text-xs shadow-lg shadow-[#0077B6]/30 transition flex items-center justify-center gap-2 cursor-pointer mt-2", children: isLoading ? (_jsx("span", { children: "Authenticating Session..." })) : (_jsxs(_Fragment, { children: [_jsx("span", { children: "Sign In to STORA" }), _jsx(ArrowRight, { className: "w-4 h-4" })] })) })] }), _jsxs("div", { className: "mt-6 pt-5 border-t border-slate-100 dark:border-[#0077B6]/30", children: [_jsxs("div", { className: "flex items-center justify-between mb-3", children: [_jsx("span", { className: "text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-[#ADE8F4]", children: "Direct Demo Logins" }), _jsxs("span", { className: "text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1", children: [_jsx(CheckCircle2, { className: "w-3 h-3" }), "6 Verified Roles"] })] }), _jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-2", children: DEMO_USERS.map((user) => (_jsxs("button", { type: "button", onClick: () => handleSelectQuickAccount(user), className: "p-2.5 rounded-xl border border-slate-200 dark:border-[#0077B6]/40 bg-slate-50/70 dark:bg-[#03045E]/60 hover:border-[#00B4D8] hover:bg-[#CAF0F8]/30 dark:hover:bg-[#03045E] transition text-left flex items-center gap-2.5 group cursor-pointer", children: [_jsx("img", { src: user.avatar, alt: user.name, className: "w-8 h-8 rounded-lg object-cover border border-slate-200 dark:border-[#0077B6]/60" }), _jsxs("div", { className: "min-w-0 flex-1", children: [_jsx("p", { className: "text-xs font-semibold text-slate-800 dark:text-white truncate group-hover:text-[#0077B6] dark:group-hover:text-[#48CAE4]", children: user.name }), _jsx("p", { className: "text-[10px] text-slate-400 dark:text-[#ADE8F4]/70 truncate", children: user.roleTitle })] })] }, user.id))) })] })] }), _jsxs("div", { className: "mt-6 text-center text-xs text-[#ADE8F4]/70 flex items-center justify-center gap-4", children: [_jsxs("span", { className: "flex items-center gap-1.5", children: [_jsx(Shield, { className: "w-3.5 h-3.5 text-[#48CAE4]" }), "Session Authentication"] }), _jsx("span", { children: "\u2022" }), _jsxs("span", { className: "flex items-center gap-1.5", children: [_jsx(Building2, { className: "w-3.5 h-3.5 text-[#48CAE4]" }), "Enterprise RBAC"] })] })] })] }));
+};
